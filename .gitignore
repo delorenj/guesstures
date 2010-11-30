@@ -1,0 +1,15 @@
+tmp/**
+*.tmp
+*.bak
+tmp/**/*
+*.swp
+*~.nib
+*~
+*.apk
+*.keystore
+build/**
+build/**/*
+bin/**
+bin/**/*
+R.java
+gen/**/*

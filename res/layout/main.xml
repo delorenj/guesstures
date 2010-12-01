@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+   android:orientation="vertical"
+   android:layout_width="fill_parent"
+   android:layout_height="fill_parent">
+   
+	<TextView
+		android:id="@+id/result"
+	  android:layout_width="fill_parent" 
+	  android:layout_height="wrap_content" />
+	  
+	<android.gesture.GestureOverlayView
+		android:id="@+id/gestureOverlay"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" 
+		android:gestureStrokeType="multiple" 
+		android:eventsInterceptionEnabled="true" 
+		android:fadeEnabled="true"
+		android:orientation="vertical"
+		android:gestureStrokeLengthThreshold="0.1"
+		android:fadeOffset="2000" />
+		    
 </LinearLayout>

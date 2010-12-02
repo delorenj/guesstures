@@ -8,7 +8,27 @@
 		android:id="@+id/result"
 	  android:layout_width="fill_parent" 
 	  android:layout_height="wrap_content" />
-	  
+
+	<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" >  
+		<ImageView
+			android:id="@+id/libraryBitmap"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+					  
+		<ImageView
+			android:id="@+id/gestureBitmap"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:layout_toRightOf="@id/libraryBitmap" />
+			
+		<TextView
+			android:id="@+id/debug"
+		  android:layout_width="fill_parent" 
+		  android:layout_height="wrap_content" 
+		  android:layout_below="@id/libraryBitmap" />
+			
+	</RelativeLayout>
+	
 	<android.gesture.GestureOverlayView
 		android:id="@+id/gestureOverlay"
 		android:layout_width="fill_parent"

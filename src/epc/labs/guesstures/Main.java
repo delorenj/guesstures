@@ -39,55 +39,21 @@ public class Main extends Activity implements OnGestureListener, OnGesturePerfor
 	@Override
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		Log.i(TAG, "onGesturePerformed");
-//		recognizeByPrediction(overlay, gesture);
-		recognizeByImageCompare(overlay, gesture);
-	}
-
-	private void recognizeByImageCompare(GestureOverlayView overlay, Gesture gesture) {
-		Log.i(TAG, "Comparing by bitmap");
-		final int bmpHeight = 16, bmpWidth = 16;
-		final int bmpSize = bmpHeight*bmpWidth;
-		float[] bss = new float[bmpSize];
-		float[] gss = new float[bmpSize];
-		double score;
-		ArrayList<Gesture> balls = mLibrary.getGestures("Balls");
-		Gesture ball = balls.get(0);
-		Bitmap ballPic = ball.toBitmap(bmpWidth, bmpHeight, 1, Color.WHITE);
-		Bitmap gesturePic = gesture.toBitmap(bmpWidth, bmpHeight, 1, Color.WHITE);
-		ImageView iv = (ImageView) findViewById(R.id.libraryBitmap);
-		iv.setImageBitmap(ballPic);
-		iv = (ImageView) findViewById(R.id.gestureBitmap);
-		iv.setImageBitmap(gesturePic);		
-		gss = GestureUtils.spatialSampling(gesture, bmpHeight, true);		
-		bss = GestureUtils.spatialSampling(ball, bmpHeight, true);
-		int matchedPixels = 0;
-		for(int i=0 ;i<bmpSize; i++) {
-			Log.i(TAG, ""+gss[i] + ", " + bss[i]);
-			if((gss[i] > 0) && (bss[i] > 0)) {
-				matchedPixels++;//pixels have some gray in them (MATCH?!)
-			}
-			else if((gss[i] == 0) && (bss[i] == 0)) { //pixels have no gray in them (MATCH?!)
-				matchedPixels++;
-			}
-		}
-		score = (double)((double)matchedPixels/(double)bmpSize);
-		TextView tv = (TextView) findViewById(R.id.debug);
-		tv.setText("Spatial Sampling Score: "+score);
-		recognizeByPrediction(overlay, gesture);
+		double spatialScore;
+		Gesture testGesture = mLibrary.getGestures("Balls").get(0);
 		
+		ImageView iv = (ImageView) findViewById(R.id.lpic);
+		iv.setImageBitmap(testGesture.toBitmap(32, 32, 1, Color.WHITE));
+		iv = (ImageView) findViewById(R.id.rpic);
+		iv.setImageBitmap(gesture.toBitmap(32, 32, 1, Color.WHITE));
+		
+		SpatialCompare comp1 = new SpatialCompare();
+		spatialScore = comp1.similarity(testGesture, gesture, 32);
+
+		TextView tv = (TextView) findViewById(R.id.result);
+		tv.setText(""+spatialScore);
 	}
 
-	private void recognizeByPrediction(GestureOverlayView overlay, Gesture gesture) {
-		Log.i(TAG, "Comparing with native predictions");
-		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
-		if(predictions.size() > 0) {
-//			printGestureDebugInfo(overlay, gesture, predictions);
-			Prediction prediction = predictions.get(0);
-			if(prediction.score > 1.0) {
-				onMatchFound(overlay, gesture, prediction);
-			}
-		}
-	}
 
 	private void printGestureDebugInfo(GestureOverlayView overlay, Gesture gesture, ArrayList<Prediction> predictions) {
 		TextView tv = (TextView) findViewById(R.id.result);
@@ -95,8 +61,7 @@ public class Main extends Activity implements OnGestureListener, OnGesturePerfor
 		tv.append("Num Strokes: " + gesture.getStrokesCount() + "\r\n");
 		for(Prediction p : predictions) {
 			tv.append(p.name + ": " + p.score + "\r\n");
-		}
-		
+		}	
 	}
 
 	private void onMatchFound(GestureOverlayView overlay, Gesture gesture, Prediction prediction) {

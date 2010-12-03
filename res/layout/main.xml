@@ -11,21 +11,21 @@
 
 	<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" >  
 		<ImageView
-			android:id="@+id/libraryBitmap"
+			android:id="@+id/lpic"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" />
 					  
 		<ImageView
-			android:id="@+id/gestureBitmap"
+			android:id="@+id/rpic"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:layout_toRightOf="@id/libraryBitmap" />
+			android:layout_toRightOf="@id/lpic" />
 			
 		<TextView
 			android:id="@+id/debug"
 		  android:layout_width="fill_parent" 
 		  android:layout_height="wrap_content" 
-		  android:layout_below="@id/libraryBitmap" />
+		  android:layout_below="@id/lpic" />
 			
 	</RelativeLayout>
 	

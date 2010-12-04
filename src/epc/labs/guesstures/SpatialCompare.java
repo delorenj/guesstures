@@ -34,7 +34,7 @@ public class SpatialCompare implements ImageCompare {
 //			if(i%1 == 0) Log.i(TAG, ""+lss[i] + ", " + rss[i]);lss.
 			if((lss[i] > 0) && (rss[i] > 0)) {
 				if(Math.abs(lss[i]-rss[i]) < 0.05) {
-					Log.i(TAG,"Match: " + Math.abs(lss[i]-rss[i]));
+//					Log.i(TAG,"Match: " + Math.abs(lss[i]-rss[i]));
 					matchedWhites++;//pixels have some gray in them (MATCH?!)
 				}
 			}
@@ -51,10 +51,12 @@ public class SpatialCompare implements ImageCompare {
 		bM_l = (double)(bM_l/(double)bmpSize);
 		bM_r = (double)(bM_r/(double)bmpSize);
 		bM_delta = Math.abs(bM_l - bM_r);
+		Log.i(TAG, "Black Mass Delta: " + bM_delta);		
+		if(bM_delta > 0.02) {
+			Log.i(TAG, "No Match!: Black mass delta is too great.");
+			return 0;
+		}
 		score = (double)((double)(matchedWhites)/(double)lWhites);
-		Log.i(TAG, "Black Mass L: " + bM_l);
-		Log.i(TAG, "Black Mass R: " + bM_r);
-		Log.i(TAG, "Black Mass Delta: " + bM_delta);
 		Log.i(TAG, "Spatial Sampling Score: "+score);
 		return score;
 	}
@@ -75,14 +77,22 @@ public class SpatialCompare implements ImageCompare {
 
 	@Override
 	public String recognize(GestureLibrary lib, Gesture subject) {
-		String strBestMatch;
+		String strBestMatch = "No Match";
 		double scoreBestMatch = 0;
-		double bmdeltaBestMatch = 0;
-		
 		Set<String> gestures = lib.getGestureEntries();
-		for(String s : gestures) {
-			
+		Log.i(TAG, "Recognizing: " + gestures.size() + " drawings in the library");
+		for(String gName : gestures) {
+			Log.i(TAG, "Checking Against Drawing: " + gName);
+			ArrayList<Gesture> gList = lib.getGestures(gName);
+			for(Gesture g : gList) {
+				double score = similarity(g, subject, 48);
+				if((score > 0.095) && (score > scoreBestMatch)) {
+					Log.i(TAG, "New Best Match!: " + gName + "(" + score + ")");
+					scoreBestMatch = score;
+					strBestMatch = gName;
+				}							
+			}
 		}
-		return "Balls";
+		return strBestMatch;
 	} 	
 }

@@ -39,35 +39,30 @@ public class Main extends Activity implements OnGestureListener, OnGesturePerfor
 	@Override
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		Log.i(TAG, "onGesturePerformed");
-		double spatialScore;
-		Gesture testGesture = mLibrary.getGestures("Balls").get(0);
-		
-		ImageView iv = (ImageView) findViewById(R.id.lpic);
-		iv.setImageBitmap(testGesture.toBitmap(32, 32, 1, Color.WHITE));
-		iv = (ImageView) findViewById(R.id.rpic);
-		iv.setImageBitmap(gesture.toBitmap(32, 32, 1, Color.WHITE));
-		
 		SpatialCompare comp1 = new SpatialCompare();
 		String result = comp1.recognize(mLibrary, gesture);
 
 		TextView tv = (TextView) findViewById(R.id.result);
 		tv.setText(result);
+		
+		ArrayList<Gesture> libMatch = mLibrary.getGestures(result);
+		if(libMatch != null) {
+			onMatchFound(overlay, libMatch.get(0), gesture, result);
+		}
+		else {
+			ImageView iv = (ImageView) findViewById(R.id.lpic);
+			iv.setImageBitmap(null);
+			iv = (ImageView) findViewById(R.id.rpic);
+			iv.setImageBitmap(null);						
+		}
 	}
 
-
-	private void printGestureDebugInfo(GestureOverlayView overlay, Gesture gesture, ArrayList<Prediction> predictions) {
-		TextView tv = (TextView) findViewById(R.id.result);
-		tv.setText("DEBUG:\r\n");
-		tv.append("Num Strokes: " + gesture.getStrokesCount() + "\r\n");
-		for(Prediction p : predictions) {
-			tv.append(p.name + ": " + p.score + "\r\n");
-		}	
-	}
-
-	private void onMatchFound(GestureOverlayView overlay, Gesture gesture, Prediction prediction) {
-		Log.i(TAG, "Match Found!: "+prediction.name);
-		TextView tv = (TextView)findViewById(R.id.result);
-		tv.setText(prediction.name);
+	private void onMatchFound(GestureOverlayView overlay, Gesture l, Gesture r, String name) {
+		Log.i(TAG, "Match Found!: "+ name);
+		ImageView iv = (ImageView) findViewById(R.id.lpic);
+		iv.setImageBitmap(l.toBitmap(48, 48, 1, Color.WHITE));
+		iv = (ImageView) findViewById(R.id.rpic);
+		iv.setImageBitmap(r.toBitmap(48, 48, 1, Color.WHITE));			
 		
 	}
 

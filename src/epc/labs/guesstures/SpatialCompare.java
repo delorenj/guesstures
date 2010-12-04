@@ -17,30 +17,40 @@ public class SpatialCompare implements ImageCompare {
 		float[] lss = new float[bmpSize];
 		float[] rss = new float[bmpSize];
 		double score;
-		lss = GestureUtils.spatialSampling(l, bmpHeight, true);		
-		rss = GestureUtils.spatialSampling(r, bmpHeight, true);
+		lss = GestureUtils.spatialSampling(l, bmpHeight);		
+		rss = GestureUtils.spatialSampling(r, bmpHeight);
 //		Log.i(TAG,"Original: " + printArray(lss));
 //		Log.i(TAG, "Awesome-o:" + printArray(rss));
 		int matchedWhites = 0;
-		int matchedBlacks = 0;
-		double blackMass = 0;
+		int lWhites = 0;
+		double bM_l = 0, bM_r = 0;
+		double bM_delta;
 		
 		for(int i=0 ;i<bmpSize; i++) {
 //			if(i%1 == 0) Log.i(TAG, ""+lss[i] + ", " + rss[i]);lss.
 			if((lss[i] > 0) && (rss[i] > 0)) {
-				matchedWhites++;//pixels have some gray in them (MATCH?!)
+				if(Math.abs(lss[i]-rss[i]) < 0.05) {
+					Log.i(TAG,"Match: " + Math.abs(lss[i]-rss[i]));
+					matchedWhites++;//pixels have some gray in them (MATCH?!)
+				}
 			}
-			else if((lss[i] == 0) && (rss[i] == 0)) { //pixels have no gray in them (MATCH?!)
-				matchedBlacks++;
-			}
-			
 			if(lss[i] == 0) {
-				blackMass++;
+				bM_l++;
 			}
+			if(rss[i] == 0) {
+				bM_r++;
+			}
+			if(lss[i] > 0) {
+				lWhites++;
+			}			
 		}
-		blackMass = (double)(blackMass/(double)bmpSize);
-		score = (double)((double)matchedWhites/(double)bmpSize);
-		Log.i(TAG, "Black Mass: " + blackMass);
+		bM_l = (double)(bM_l/(double)bmpSize);
+		bM_r = (double)(bM_r/(double)bmpSize);
+		bM_delta = Math.abs(bM_l - bM_r);
+		score = (double)((double)(matchedWhites)/(double)lWhites);
+		Log.i(TAG, "Black Mass L: " + bM_l);
+		Log.i(TAG, "Black Mass R: " + bM_r);
+		Log.i(TAG, "Black Mass Delta: " + bM_delta);
 		Log.i(TAG, "Spatial Sampling Score: "+score);
 		return score;
 	}

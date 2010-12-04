@@ -48,7 +48,7 @@ public class Main extends Activity implements OnGestureListener, OnGesturePerfor
 		iv.setImageBitmap(gesture.toBitmap(32, 32, 1, Color.WHITE));
 		
 		SpatialCompare comp1 = new SpatialCompare();
-		spatialScore = comp1.similarity(testGesture, gesture, 32);
+		spatialScore = comp1.similarity(testGesture, gesture, 48);
 
 		TextView tv = (TextView) findViewById(R.id.result);
 		tv.setText(""+spatialScore);

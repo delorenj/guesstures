@@ -1,6 +1,10 @@
 package epc.labs.guesstures;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 import android.gesture.Gesture;
+import android.gesture.GestureLibrary;
 import android.gesture.GestureUtils;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -67,5 +71,18 @@ public class SpatialCompare implements ImageCompare {
 		} 
 		return str.substring(0, str.length()-1);
 		
+	}
+
+	@Override
+	public String recognize(GestureLibrary lib, Gesture subject) {
+		String strBestMatch;
+		double scoreBestMatch = 0;
+		double bmdeltaBestMatch = 0;
+		
+		Set<String> gestures = lib.getGestureEntries();
+		for(String s : gestures) {
+			
+		}
+		return "Balls";
 	} 	
 }

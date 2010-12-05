@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
    android:orientation="vertical"
    android:layout_width="fill_parent"
    android:layout_height="fill_parent">
    
-	<TextView
-		android:id="@+id/result"
-	  android:layout_width="fill_parent" 
-	  android:layout_height="wrap_content" />
-
-	<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" >  
+	<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" >
+		<TextView
+			android:id="@+id/result"
+		  	android:layout_width="fill_parent" 
+	  		android:layout_height="wrap_content" />
+	  
 		<ImageView
 			android:id="@+id/lpic"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+			android:layout_height="wrap_content" 
+			android:layout_below="@id/result" />
 					  
 		<ImageView
 			android:id="@+id/rpic"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:layout_toRightOf="@id/lpic" />
+			android:layout_toRightOf="@id/lpic" 
+			android:layout_below="@id/result" />
 			
 		<TextView
 			android:id="@+id/debug"
-		  android:layout_width="fill_parent" 
-		  android:layout_height="wrap_content" 
-		  android:layout_below="@id/lpic" />
-			
+		  	android:layout_width="fill_parent" 
+		  	android:layout_height="wrap_content" 
+		  	android:layout_below="@id/lpic" />			
 	</RelativeLayout>
 	
+	<epc.labs.guesstures.UIOverlay
+		android:id="@+id/uiOverlay"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+		
 	<android.gesture.GestureOverlayView
 		android:id="@+id/gestureOverlay"
 		android:layout_width="fill_parent"
@@ -40,4 +46,4 @@
 		android:gestureStrokeLengthThreshold="0.1"
 		android:fadeOffset="2000" />
 		    
-</LinearLayout>
+</FrameLayout>

@@ -3,15 +3,13 @@ package epc.labs.guesstures;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
-import android.gesture.GestureUtils;
-import android.gesture.Prediction;
 import android.gesture.GestureOverlayView.OnGestureListener;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,13 +17,13 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Main extends Activity implements OnGestureListener, OnGesturePerformedListener {
+public class Guesstures extends Activity implements OnGestureListener, OnGesturePerformedListener {
 	private static final String TAG = "Guesstures";
 	GestureLibrary mLibrary;
 	
 	@Override
   public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    super.onCreate(savedInstanceState);    
     setContentView(R.layout.main);
     mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
     if(!mLibrary.load()) {
@@ -34,6 +32,8 @@ public class Main extends Activity implements OnGestureListener, OnGesturePerfor
     GestureOverlayView overlay = (GestureOverlayView) findViewById(R.id.gestureOverlay);
     overlay.addOnGesturePerformedListener(this);
     overlay.addOnGestureListener(this);
+    Intent about = new Intent(this, About.class);
+    startActivity(about);
   }
 
 	@Override

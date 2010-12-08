@@ -1,6 +1,8 @@
 package epc.labs.guesstures;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -9,21 +11,18 @@ import android.view.View;
 
 public class UIOverlay extends View {
 	public static final String TAG = "Guesstures";
-	private Drawable mScore;
+	private ScoreView mScoreView;
+	private Bitmap mBackground;
 	
 	public UIOverlay(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mScore = context.getResources().getDrawable(R.drawable.icon);
+		mScoreView = new ScoreView(context);
 
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Log.i(TAG, "Overlay onDraw");
-		int scoreWidth = mScore.getIntrinsicWidth();
-		int scoreHeight = mScore.getIntrinsicHeight();
-		mScore.setBounds(getWidth() - scoreWidth, 0, getWidth(), scoreHeight);
-		mScore.draw(canvas);
 
 	}
 	

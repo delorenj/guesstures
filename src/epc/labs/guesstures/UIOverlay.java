@@ -6,25 +6,32 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
-public class UIOverlay extends View {
+public class UIOverlay extends ViewGroup {
 	public static final String TAG = "Guesstures";
-	private Drawable mScore;
+	private ScoreView mScoreView;
 	
 	public UIOverlay(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mScore = context.getResources().getDrawable(R.drawable.icon);
-
+		mScoreView = new ScoreView(context, attrs);
+		mScoreView.setScore(89);
+		addView(mScoreView);
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Log.i(TAG, "Overlay onDraw");
-		int scoreWidth = mScore.getIntrinsicWidth();
-		int scoreHeight = mScore.getIntrinsicHeight();
-		mScore.setBounds(getWidth() - scoreWidth, 0, getWidth(), scoreHeight);
-		mScore.draw(canvas);
+	}
 
+	@Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		if(!changed) return;	//return if nothing has changed
+		for(int i=0; i<getChildCount(); i++) {
+			View v = (View) getChildAt(i);
+			Log.d(TAG,"UIOverlay: onLayout()");
+			v.layout(l, t, r, b);
+		}
 	}
 	
 }

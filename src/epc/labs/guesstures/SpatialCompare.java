@@ -6,8 +6,6 @@ import java.util.Set;
 import android.gesture.Gesture;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureUtils;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.util.Log;
 
 public class SpatialCompare implements ImageCompare {

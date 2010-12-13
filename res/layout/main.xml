@@ -33,7 +33,9 @@
 	<epc.labs.guesstures.UIOverlay
 		android:id="@+id/uiOverlay"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
+		android:layout_height="fill_parent" > 
+					
+	</epc.labs.guesstures.UIOverlay>
 		
 	<android.gesture.GestureOverlayView
 		android:id="@+id/gestureOverlay"

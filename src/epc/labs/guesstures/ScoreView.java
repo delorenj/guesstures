@@ -17,11 +17,11 @@ public class ScoreView extends ViewGroup {
 	private String mstrScore;
 	private Drawable[] mdrawScore;
 	private Drawable[] mFont;
-	
+
 	public ScoreView(Context context) {
 		super(context);
 		mContext = context;
-		setId(1);	// 1, for ScoreView id
+		setId(1);       // 1, for ScoreView id
 		initFont();
 	}
 
@@ -30,7 +30,7 @@ public class ScoreView extends ViewGroup {
 		mContext = context;
 		initFont();
 	}
-	
+
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		Log.d(TAG, "onLayout called!: l="+l+", t="+t+", r="+r+", b="+b);
@@ -41,18 +41,17 @@ public class ScoreView extends ViewGroup {
 				int prevLeft = this.getWidth();
 				for(int i=getChildCount()-1; i>=0; i--) {
 					ImageView iv = (ImageView)getChildAt(i);
-					int newLeft = prevLeft - iv.getDrawable().getIntrinsicWidth()-5; 
-					iv.layout(newLeft, 
-							5, 
-							prevLeft-5, 
+					int newLeft = prevLeft - iv.getDrawable().getIntrinsicWidth()-5;
+					iv.layout(newLeft,
+							5,
+							prevLeft-5,
 							iv.getDrawable().getIntrinsicHeight()+5);
 					Log.d(TAG, "      Digit #"+i+": l="+newLeft+", t=5, r="+(prevLeft-5)+", b="+(iv.getDrawable().getIntrinsicHeight()+5));
 					prevLeft = newLeft;
-				}				
+				}
 			}
 		}
 	}
-	
 	public void initFont() {
 		mFont = new Drawable[10];
 		mFont[0] = mContext.getResources().getDrawable(R.drawable.font_0);
@@ -66,7 +65,7 @@ public class ScoreView extends ViewGroup {
 		mFont[8] = mContext.getResources().getDrawable(R.drawable.font_8);
 		mFont[9] = mContext.getResources().getDrawable(R.drawable.font_9);
 	}
-	
+
 	public void setScore(int score) {
 		Log.d(TAG, "setScore(): " + score);
 		mScore = score;
@@ -84,6 +83,6 @@ public class ScoreView extends ViewGroup {
 			iv.setId(i);
 			iv.setImageDrawable(mdrawScore[i]);
 			addView(iv);
-		}		
+		}
 	}
 }

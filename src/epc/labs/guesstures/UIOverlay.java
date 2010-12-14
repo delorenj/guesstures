@@ -1,6 +1,8 @@
 package epc.labs.guesstures;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -33,5 +35,4 @@ public class UIOverlay extends ViewGroup {
 			v.layout(l, t, r, b);
 		}
 	}
-	
 }

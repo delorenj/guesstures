@@ -13,11 +13,15 @@ import android.view.ViewGroup;
 public class UIOverlay extends ViewGroup {
 	public static final String TAG = "Guesstures";
 	private ScoreView mScoreView;
+	private DatabaseHelper mDatabase;
 	
 	public UIOverlay(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mScoreView = new ScoreView(context, attrs);
-		mScoreView.setScore(89);
+		mDatabase = new DatabaseHelper(context);
+		boolean updated = mDatabase.updateScore("Beef");
+		Log.i(TAG,"Updated?: "+updated);
+		mScoreView.setScore(mDatabase.queryScore());
 		addView(mScoreView);
 	}
 	

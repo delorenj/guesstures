@@ -28,6 +28,7 @@ public class ScoreView extends ViewGroup {
 	public ScoreView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
+		setId(1);       // 1, for ScoreView id		
 		initFont();
 	}
 
@@ -72,12 +73,12 @@ public class ScoreView extends ViewGroup {
 		mstrScore = Integer.toString(score);
 		Log.d(TAG, "setScore(): mstrScore=" + mstrScore);
 		mdrawScore = new Drawable[mstrScore.length()];
-		Log.i(TAG, "mScore:" + mScore);
-		Log.i(TAG, "mstrScore:" + mstrScore);
-		Log.i(TAG, "mstrScore.length(): "+mstrScore.length());
-		Log.i(TAG, "mFont.length(): " + mFont.length);
+		Log.d(TAG, "mScore:" + mScore);
+		Log.d(TAG, "mstrScore:" + mstrScore);
+		Log.d(TAG, "mstrScore.length(): "+mstrScore.length());
+		Log.d(TAG, "mFont.length(): " + mFont.length);
 		for(int i=0; i<mstrScore.length(); i++) {
-			Log.i(TAG, "Loop " + i + ": " + Integer.parseInt(mstrScore.charAt(i)+""));
+			Log.d(TAG, "Loop " + i + ": " + Integer.parseInt(mstrScore.charAt(i)+""));
 			mdrawScore[i] = mFont[Integer.parseInt(mstrScore.charAt(i)+"")];
 			ImageView iv = new ImageView(this.getContext());
 			iv.setId(i);

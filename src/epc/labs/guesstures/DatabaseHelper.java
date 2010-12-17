@@ -11,7 +11,7 @@ import static epc.labs.guesstures.ProgressTableConstants.*;
 public class DatabaseHelper extends SQLiteOpenHelper {
   private static final String TAG = "Guesstures";
   private static final String DATABASE_NAME = "guesstures.db";
-  private static final int DATABASE_VERSION = 2;
+  private static final int DATABASE_VERSION = 4;
 
 
   public DatabaseHelper(Context context) { 
@@ -38,7 +38,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public int queryScore() {
   	SQLiteDatabase db = getReadableDatabase();
   	Cursor result = db.query(TABLE_NAME, null, null, null, null, null, null);
-  	return result.getCount();
+  	int score = result.getCount();
+  	result.close();
+  	return score;
   }
   
   public boolean updateScore(String name) {

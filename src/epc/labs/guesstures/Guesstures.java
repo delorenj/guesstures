@@ -33,7 +33,9 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
     overlay.addOnGesturePerformedListener(this);
     overlay.addOnGestureListener(this);
     Intent about = new Intent(this, About.class);
-    startActivity(about);
+    if(savedInstanceState == null) {
+  		startActivity(about);	
+  	}
   }
 
 	@Override
@@ -59,6 +61,8 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 
 	private void onMatchFound(GestureOverlayView overlay, Gesture l, Gesture r, String name) {
 		Log.i(TAG, "Match Found!: "+ name);
+		UIOverlay ui = (UIOverlay) findViewById(R.id.uiOverlay);
+		ui.updateScore(name);
 		ImageView iv = (ImageView) findViewById(R.id.lpic);
 		iv.setImageBitmap(l.toBitmap(48, 48, 1, Color.WHITE));
 		iv = (ImageView) findViewById(R.id.rpic);

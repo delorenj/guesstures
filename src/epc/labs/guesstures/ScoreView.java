@@ -1,19 +1,17 @@
 package epc.labs.guesstures;
 
-import java.util.ArrayList;
-
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.view.View;
 
-public class ScoreView extends ViewGroup {
+public class ScoreView extends View {
 
 	public static final String TAG = "Guesstures";
 	private Context mContext;
-	private int mScore;
 	private String mstrScore;
 	private Drawable[] mdrawScore;
 	private Drawable[] mFont;
@@ -21,38 +19,33 @@ public class ScoreView extends ViewGroup {
 	public ScoreView(Context context) {
 		super(context);
 		mContext = context;
-		setId(1);       // 1, for ScoreView id
 		initFont();
 	}
 
 	public ScoreView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mContext = context;
-		setId(1);       // 1, for ScoreView id		
+		mContext = context;		
 		initFont();
 	}
 
 	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		Log.d(TAG, "onLayout called!: l="+l+", t="+t+", r="+r+", b="+b);
-		if(changed) {
-			Log.i(TAG, "onLayout: Changed!");
-			if(getChildCount() > 0) {
-				Log.i(TAG, "onLayout: children="+getChildCount());
-				int prevLeft = this.getWidth();
-				for(int i=getChildCount()-1; i>=0; i--) {
-					ImageView iv = (ImageView)getChildAt(i);
-					int newLeft = prevLeft - iv.getDrawable().getIntrinsicWidth()-5;
-					iv.layout(newLeft,
-							5,
-							prevLeft-5,
-							iv.getDrawable().getIntrinsicHeight()+5);
-					Log.d(TAG, "      Digit #"+i+": l="+newLeft+", t=5, r="+(prevLeft-5)+", b="+(iv.getDrawable().getIntrinsicHeight()+5));
-					prevLeft = newLeft;
-				}
-			}
+	protected void onDraw(Canvas c) {
+		Log.d(TAG, "onDraw(): ScoreView");
+		if(mdrawScore.length == 0)
+			return;
+		int prevLeft = getWidth();
+		int bottom = mdrawScore[0].getIntrinsicHeight();
+		for(int i=mdrawScore.length-1; i>=0; i--) {
+			Drawable d = mdrawScore[i];
+			int newLeft = prevLeft - d.getIntrinsicWidth()-5;
+			Rect bounds = new Rect();
+			bounds.set(newLeft, 5, prevLeft-5, bottom+5);
+			d.setBounds(bounds);
+			d.draw(c);
+			prevLeft = newLeft;
 		}
 	}
+	
 	public void initFont() {
 		mFont = new Drawable[10];
 		mFont[0] = mContext.getResources().getDrawable(R.drawable.font_0);
@@ -67,23 +60,13 @@ public class ScoreView extends ViewGroup {
 		mFont[9] = mContext.getResources().getDrawable(R.drawable.font_9);
 	}
 
-	public void setScore(int score) {
+	public void drawScore(int score) {
 		Log.d(TAG, "setScore(): " + score);
-		mScore = score;
 		mstrScore = Integer.toString(score);
-		Log.d(TAG, "setScore(): mstrScore=" + mstrScore);
 		mdrawScore = new Drawable[mstrScore.length()];
-		Log.d(TAG, "mScore:" + mScore);
-		Log.d(TAG, "mstrScore:" + mstrScore);
-		Log.d(TAG, "mstrScore.length(): "+mstrScore.length());
-		Log.d(TAG, "mFont.length(): " + mFont.length);
 		for(int i=0; i<mstrScore.length(); i++) {
-			Log.d(TAG, "Loop " + i + ": " + Integer.parseInt(mstrScore.charAt(i)+""));
 			mdrawScore[i] = mFont[Integer.parseInt(mstrScore.charAt(i)+"")];
-			ImageView iv = new ImageView(this.getContext());
-			iv.setId(i);
-			iv.setImageDrawable(mdrawScore[i]);
-			addView(iv);
 		}
+		invalidate();
 	}
 }

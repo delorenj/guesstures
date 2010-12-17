@@ -1,10 +1,7 @@
 package epc.labs.guesstures;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +16,7 @@ public class UIOverlay extends ViewGroup {
 		super(context, attrs);
 		mScoreView = new ScoreView(context, attrs);
 		mDatabase = new DatabaseHelper(context);
-		boolean updated = mDatabase.updateScore("Beef");
-		Log.i(TAG,"Updated?: "+updated);
-		mScoreView.setScore(mDatabase.queryScore());
+		mScoreView.drawScore(mDatabase.queryScore());
 		addView(mScoreView);
 	}
 	
@@ -30,6 +25,12 @@ public class UIOverlay extends ViewGroup {
 		Log.i(TAG, "Overlay onDraw");
 	}
 
+	public void updateScore(String name) {
+		if(mDatabase.updateScore(name)) {							// Update score in database
+			mScoreView.drawScore(mDatabase.queryScore());// Draw new score
+		}
+	}
+	
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		if(!changed) return;	//return if nothing has changed

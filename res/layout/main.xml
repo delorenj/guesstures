@@ -3,11 +3,11 @@
    android:orientation="vertical"
    android:layout_width="fill_parent"
    android:layout_height="fill_parent">
-   
+
   <epc.labs.guesstures.GLOverlay
   	android:layout_width="fill_parent"
-  	android:layout_height="fill_parent" />
-  	
+  	android:layout_height="fill_parent" /> 	
+		       
 	<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" >
 		<TextView
 			android:id="@+id/result"
@@ -51,5 +51,6 @@
 		android:orientation="vertical"
 		android:gestureStrokeLengthThreshold="0.1"
 		android:fadeOffset="2000" />
-		    
+
+
 </FrameLayout>

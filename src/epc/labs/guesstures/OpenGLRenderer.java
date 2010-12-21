@@ -17,10 +17,9 @@ public class OpenGLRenderer implements Renderer {
 		// Translates 4 units into the screen.
 		gl.glTranslatef(0, 0, -4); // OpenGL docs
 	// Replace the current matrix with the identity matrix
-		gl.glLoadIdentity(); // OpenGL docs
+		gl.glLoadIdentity(); // OpenGL docs		
 		
 		mSquare.draw(gl);
-		
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class OpenGLRenderer implements Renderer {
 		// Select the modelview matrix
 		gl.glMatrixMode(GL10.GL_MODELVIEW);// OpenGL docs.
 		// Reset the modelview matrix
-		gl.glLoadIdentity();// OpenGL docs.
+		gl.glLoadIdentity();// OpenGL docs.		
 
 	}
 
@@ -56,7 +55,7 @@ public class OpenGLRenderer implements Renderer {
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, // OpenGL docs.
                           GL10.GL_NICEST);
 		
-		mSquare = new Square();
+		mSquare = new Square();		
 	}
 
 }

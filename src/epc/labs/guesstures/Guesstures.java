@@ -19,16 +19,22 @@ import android.widget.TextView;
 
 public class Guesstures extends Activity implements OnGestureListener, OnGesturePerformedListener {
 	private static final String TAG = "Guesstures";
-	GestureLibrary mLibrary;
+	GestureLibrary[] mLibraries;
 	
 	@Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);    
     setContentView(R.layout.main);
-    mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
-    if(!mLibrary.load()) {
-    	finish();
+    mLibraries = new GestureLibrary[2];
+    mLibraries[0] = GestureLibraries.fromRawResource(this, R.raw.gestures1);
+    mLibraries[1] = GestureLibraries.fromRawResource(this, R.raw.gestures2);
+    
+    for(GestureLibrary lib : mLibraries) {
+      if(!lib.load()) {
+      	finish();
+      }    	
     }
+    
     GestureOverlayView overlay = (GestureOverlayView) findViewById(R.id.gestureOverlay);
     overlay.addOnGesturePerformedListener(this);
     overlay.addOnGestureListener(this);
@@ -41,13 +47,19 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 	@Override
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		Log.i(TAG, "onGesturePerformed");
+		int numStrokes = gesture.getStrokesCount();
+		String result = "No Match";
+		ArrayList<Gesture> libMatch = null;
 		SpatialCompare comp1 = new SpatialCompare();
-		String result = comp1.recognize(mLibrary, gesture);
-
+		
+		if(numStrokes >= mLibraries.length) {
+			result = comp1.recognize(mLibraries[numStrokes-1], gesture);
+			libMatch = mLibraries[numStrokes-1].getGestures(result);
+		}
+		
 		TextView tv = (TextView) findViewById(R.id.result);
 		tv.setText(result);
 		
-		ArrayList<Gesture> libMatch = mLibrary.getGestures(result);
 		if(libMatch != null) {
 			onMatchFound(overlay, libMatch.get(0), gesture, result);
 		}

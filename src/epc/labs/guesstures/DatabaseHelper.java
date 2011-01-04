@@ -11,7 +11,7 @@ import static epc.labs.guesstures.ProgressTableConstants.*;
 public class DatabaseHelper extends SQLiteOpenHelper {
   private static final String TAG = "Guesstures";
   private static final String DATABASE_NAME = "guesstures.db";
-  private static final int DATABASE_VERSION = 4;
+  private static final int DATABASE_VERSION = 5;
 
 
   public DatabaseHelper(Context context) { 

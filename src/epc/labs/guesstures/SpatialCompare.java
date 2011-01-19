@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import android.app.Activity;
-import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureUtils;

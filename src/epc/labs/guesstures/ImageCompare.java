@@ -9,5 +9,5 @@ public interface ImageCompare {
 
 	double similarity(Gesture l, Gesture r, int size);
 	
-	String recognize(GestureLibrary lib, Gesture subject);
+	//String recognize(Gesture subject);
 }

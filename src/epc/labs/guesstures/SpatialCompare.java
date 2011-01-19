@@ -3,13 +3,20 @@ package epc.labs.guesstures;
 import java.util.ArrayList;
 import java.util.Set;
 
+import android.app.Activity;
+import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureUtils;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
-public class SpatialCompare implements ImageCompare {
+public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implements ImageCompare {
 	private static final String TAG = "Guesstures";
+	protected GestureLibrary mLibrary;
+	protected ArrayList<Gesture> libMatch = null;
+	protected Activity activity;
 
 	@Override
 	public double similarity(Gesture l, Gesture r, int size) {
@@ -73,18 +80,18 @@ public class SpatialCompare implements ImageCompare {
 		
 	}
 
-	@Override
-	public String recognize(GestureLibrary lib, Gesture subject) {
+	private String recognize(Gesture subject) {
 		String strBestMatch = "No Match";
 		double scoreBestMatch = 0;
-		Set<String> gestures = lib.getGestureEntries();
+		Set<String> gestures = mLibrary.getGestureEntries();
 		Log.i(TAG, "Recognizing: " + gestures.size() + " drawings in the library");
 		for(String gName : gestures) {
-			Log.i(TAG, "Checking Against Drawing: " + gName);
-			ArrayList<Gesture> gList = lib.getGestures(gName);
+			Log.i(TAG, "++++++++++++++++++++ Checking Against Drawing: " + gName + "+++++++++++++++++++++++++++++");
+			ArrayList<Gesture> gList = mLibrary.getGestures(gName);
 			for(Gesture g : gList) {
+				Log.i(TAG, "\tGESTURE: " + gName + " ------------------");
 				double score = similarity(g, subject, 48);
-				if((score > 0.095) && (score > scoreBestMatch)) {
+				if((score > 0.085) && (score > scoreBestMatch)) {
 					Log.i(TAG, "New Best Match!: " + gName + "(" + score + ")");
 					scoreBestMatch = score;
 					strBestMatch = gName;
@@ -92,5 +99,24 @@ public class SpatialCompare implements ImageCompare {
 			}
 		}
 		return strBestMatch;
-	} 	
+	}
+
+	@Override
+	protected String doInBackground(Gesture... params) {
+		return recognize(params[0]);
+	}
+		
+	@Override
+	protected void onPostExecute(String match) {
+		libMatch = mLibrary.getGestures(match);
+		TextView tv = (TextView) activity.findViewById(R.id.result);
+		tv.setText(match);		
+	}
+	
+	public void setLibrary(GestureLibrary lib) {
+		mLibrary = lib;
+	}
+	public void setActivity(Activity a) {
+		activity = a;
+	}
 }

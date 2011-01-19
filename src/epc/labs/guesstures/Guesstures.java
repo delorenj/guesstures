@@ -48,26 +48,12 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		Log.i(TAG, "onGesturePerformed");
 		int numStrokes = gesture.getStrokesCount();
-		String result = "No Match";
-		ArrayList<Gesture> libMatch = null;
-		SpatialCompare comp1 = new SpatialCompare();
-		
-		if(numStrokes >= mLibraries.length) {
-			result = comp1.recognize(mLibraries[numStrokes-1], gesture);
-			libMatch = mLibraries[numStrokes-1].getGestures(result);
-		}
-		
-		TextView tv = (TextView) findViewById(R.id.result);
-		tv.setText(result);
-		
-		if(libMatch != null) {
-			onMatchFound(overlay, libMatch.get(0), gesture, result);
-		}
-		else {
-			ImageView iv = (ImageView) findViewById(R.id.lpic);
-			iv.setImageBitmap(null);
-			iv = (ImageView) findViewById(R.id.rpic);
-			iv.setImageBitmap(null);						
+
+		if(numStrokes <= mLibraries.length) {
+				SpatialCompare sc = new SpatialCompare();
+				sc.setLibrary(mLibraries[numStrokes-1]);
+				sc.setActivity(this);
+				sc.execute(gesture);
 		}
 	}
 

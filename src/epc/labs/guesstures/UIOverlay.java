@@ -22,7 +22,7 @@ public class UIOverlay extends ViewGroup {
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Log.i(TAG, "Overlay onDraw");
+//		Log.i(TAG, "Overlay onDraw");
 	}
 
 	public void updateScore(String name) {

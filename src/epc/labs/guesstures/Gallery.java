@@ -3,7 +3,6 @@ package epc.labs.guesstures;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.GridView;
-import android.widget.TextView;
 
 public class Gallery extends Activity {
 	private static String TAG = "Guesstures";
@@ -12,6 +11,6 @@ public class Gallery extends Activity {
 		super.onCreate(icicle);
 		setContentView(R.layout.gallery);
 		GridView gridview = (GridView) findViewById(R.id.gridview);
-		gridview.setAdapter(new ImageAdapter(this));
+		gridview.setAdapter(new GalleryImageAdapter(this));
 	}
 }

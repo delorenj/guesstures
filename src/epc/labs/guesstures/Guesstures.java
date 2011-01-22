@@ -44,7 +44,6 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
   	}
   }
 
-	@Override
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		Log.i(TAG, "onGesturePerformed");
 		int numStrokes = gesture.getStrokesCount();
@@ -104,23 +103,19 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 		ui.resetScore();
 	}
 
-	@Override
 	public void onGesture(GestureOverlayView overlay, MotionEvent event) {
 	}
 
-	@Override
 	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureCancelled");
 		
 	}
 
-	@Override
 	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureEnded");
 		
 	}
 
-	@Override
 	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureStarted");
 		

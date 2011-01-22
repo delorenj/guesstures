@@ -1,5 +1,7 @@
 package epc.labs.guesstures;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -41,6 +43,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   	int score = result.getCount();
   	result.close();
   	return score;
+  }
+  
+  public ArrayList<String> queryUnlockedGuesstures() {
+	  SQLiteDatabase db = getReadableDatabase();
+	  ArrayList<String> guesstures = new ArrayList<String>();
+	  guesstures.add("tree");
+	  guesstures.add("balls");
+	  return guesstures;
   }
   
   public void resetScore() {

@@ -17,7 +17,6 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 	protected ArrayList<Gesture> libMatch = null;
 	protected Activity activity;
 
-	@Override
 	public double similarity(Gesture l, Gesture r, int size) {
 		Log.i(TAG, "Comparing by bitmap");
 		final int bmpHeight = size, bmpWidth = size;
@@ -65,7 +64,6 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 		return score;
 	}
 
-	@Override
 	public double similarity(Gesture l, Gesture r) {
 		return similarity(l,r,32);
 	}

@@ -11,6 +11,9 @@ import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -54,15 +57,51 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 		}
 	}
 
-	private void onMatchFound(GestureOverlayView overlay, Gesture l, Gesture r, String name) {
-		Log.i(TAG, "Match Found!: "+ name);
-		UIOverlay ui = (UIOverlay) findViewById(R.id.uiOverlay);
-		ui.updateScore(name);
-		ImageView iv = (ImageView) findViewById(R.id.lpic);
-		iv.setImageBitmap(l.toBitmap(48, 48, 1, Color.WHITE));
-		iv = (ImageView) findViewById(R.id.rpic);
-		iv.setImageBitmap(r.toBitmap(48, 48, 1, Color.WHITE));			
+//	private void onMatchFound(GestureOverlayView overlay, Gesture l, Gesture r, String name) {
+//		Log.i(TAG, "Match Found!: "+ name);
+//		UIOverlay ui = (UIOverlay) findViewById(R.id.uiOverlay);
+//		ui.updateScore(name);
+//		ImageView iv = (ImageView) findViewById(R.id.lpic);
+//		iv.setImageBitmap(l.toBitmap(48, 48, 1, Color.WHITE));
+//		iv = (ImageView) findViewById(R.id.rpic);
+//		iv.setImageBitmap(r.toBitmap(48, 48, 1, Color.WHITE));			
+//		
+//	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.canvas_menu, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.new_game:
+			newGame();
+			return true;
+		case R.id.tutorial:
+			tutorial();
+			return true;
+		case R.id.gallery:
+	    Intent gallery = new Intent(this, Gallery.class);
+	    startActivity(gallery);	
+			return true;			
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 		
+	}
+
+	private void tutorial() {
+		Log.e(TAG, "Tutorial not implemented yet");
+		
+	}
+
+	private void newGame() {
+		UIOverlay ui = (UIOverlay) findViewById(R.id.uiOverlay);
+		ui.resetScore();
 	}
 
 	@Override

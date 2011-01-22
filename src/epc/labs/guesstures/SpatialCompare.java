@@ -80,7 +80,7 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 	}
 
 	private String recognize(Gesture subject) {
-		String strBestMatch = "No Match";
+		String strBestMatch = null;
 		double scoreBestMatch = 0;
 		Set<String> gestures = mLibrary.getGestureEntries();
 		Log.i(TAG, "Recognizing: " + gestures.size() + " drawings in the library");
@@ -107,9 +107,17 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 		
 	@Override
 	protected void onPostExecute(String match) {
-		libMatch = mLibrary.getGestures(match);
-		TextView tv = (TextView) activity.findViewById(R.id.result);
-		tv.setText(match);		
+		if(match != null) {
+			libMatch = mLibrary.getGestures(match);
+			TextView tv = (TextView) activity.findViewById(R.id.result);
+			tv.setText(match);		
+			UIOverlay ui = (UIOverlay) activity.findViewById(R.id.uiOverlay);
+			ui.updateScore(match);			
+		} else {
+			TextView tv = (TextView) activity.findViewById(R.id.result);
+			tv.setText("No Match");
+		}
+		
 	}
 	
 	public void setLibrary(GestureLibrary lib) {

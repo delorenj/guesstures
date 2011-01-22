@@ -43,6 +43,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   	return score;
   }
   
+  public void resetScore() {
+  	SQLiteDatabase db = getWritableDatabase();
+  	db.delete(TABLE_NAME, null, null);
+  }
+   
   public boolean updateScore(String name) {
   	SQLiteDatabase db = getWritableDatabase();
   	ContentValues v = new ContentValues();

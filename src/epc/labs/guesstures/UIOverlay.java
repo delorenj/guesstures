@@ -30,6 +30,11 @@ public class UIOverlay extends ViewGroup {
 			mScoreView.drawScore(mDatabase.queryScore());// Draw new score
 		}
 	}
+
+	public void resetScore() {
+		mDatabase.resetScore();
+		mScoreView.drawScore(0);
+	}
 	
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {

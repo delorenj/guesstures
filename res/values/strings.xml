@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="gallery_description">View your sweet collection of unlocked guesstures!</string>
+    <string name="new_game">Reset Score</string>
+    <string name="how_to_play">How to Play</string>
     <string name="hello">Hello World, Main!</string>
     <string name="app_name">Guesstures</string>
     <string name="about_title">How to play</string>
 	<string name="about_text">Draw stuff using your finger. Unlock achievements by matching the hidden doodles!</string>
 	<string name="about_button">Close</string>
+<string name="gallery">Gallery</string>
 </resources>

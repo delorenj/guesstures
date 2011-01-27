@@ -28,8 +28,13 @@ public class GalleryImageAdapter extends BaseAdapter {
       mThumbIds = new int[guesstures.size()];
       int i = 0;
       for(String guessture : guesstures) {
+      		guessture = guessture.replace(" ", "_");
+      		guessture = guessture.replace("-", "_");
         	int id = mContext.getResources().getIdentifier(guessture, "drawable", "epc.labs.guesstures");
-        	Log.i(TAG, "Identifier: " + id);
+        	if(id == 0) {
+        		Log.e(TAG, "Missing Gallery Image: " + guessture);
+        		id = mContext.getResources().getIdentifier("no_photo", "drawable", "epc.labs.guesstures");
+        	} 
         	mThumbIds[i] = id;
         	i++;
       }    	
@@ -61,13 +66,4 @@ public class GalleryImageAdapter extends BaseAdapter {
         imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
-
-    // references to our images
-//    private Integer[] mThumbIds = {
-//            R.drawable.tree, R.drawable.balls,
-//            R.drawable.font_2, R.drawable.font_3,
-//            R.drawable.font_4, R.drawable.font_5,
-//            R.drawable.font_6, R.drawable.font_7,
-//            R.drawable.font_8, R.drawable.font_9
-//    };
 }

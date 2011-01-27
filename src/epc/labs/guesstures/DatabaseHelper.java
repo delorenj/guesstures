@@ -48,8 +48,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public ArrayList<String> queryUnlockedGuesstures() {
 	  SQLiteDatabase db = getReadableDatabase();
 	  ArrayList<String> guesstures = new ArrayList<String>();
-	  guesstures.add("tree");
-	  guesstures.add("balls");
+	  Cursor result = db.query(TABLE_NAME, new String[] {NAME}, null, null, null, null, TIME);
+		while(result.moveToNext()) {
+			guesstures.add(result.getString(result.getColumnIndex(NAME)));	  	
+	  }
+		result.close();
 	  return guesstures;
   }
   

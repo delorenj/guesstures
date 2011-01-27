@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 public class Guesstures extends Activity implements OnGestureListener, OnGesturePerformedListener {
 	private static final String TAG = "Guesstures";
+	private DatabaseHelper mDatabase;
 	GestureLibrary[] mLibraries;
 	
 	@Override
@@ -35,11 +36,12 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
       }    	
     }
     
+    mDatabase = new DatabaseHelper(this);
     GestureOverlayView overlay = (GestureOverlayView) findViewById(R.id.gestureOverlay);
     overlay.addOnGesturePerformedListener(this);
     overlay.addOnGestureListener(this);
     Intent about = new Intent(this, About.class);
-    if(savedInstanceState == null) {
+    if((savedInstanceState == null) && (mDatabase.queryScore() < 3)) {
   		startActivity(about);	
   	}
   }

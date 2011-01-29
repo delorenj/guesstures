@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
@@ -15,6 +16,7 @@ public class UIOverlay extends ViewGroup {
 	private ScoreView mScoreView;
 	private Context mContext;
 	private UnlockAnimationView mUnlockAnimationView;
+	private AnimationListener animListener; 
 	private DatabaseHelper mDatabase;
 	
 	public UIOverlay(Context context, AttributeSet attrs) {
@@ -38,9 +40,23 @@ public class UIOverlay extends ViewGroup {
 		if(mDatabase.updateScore(name)) {							// Update score in database
 			mScoreView.drawScore(mDatabase.queryScore());// Draw new score
 		}
+	
 		mUnlockAnimationView.setSprite(name);
-		Animation hyperspaceJump = AnimationUtils.loadAnimation(mContext, R.anim.unlock_anim);
-		mUnlockAnimationView.startAnimation(hyperspaceJump);
+		Animation unlockAnim = AnimationUtils.loadAnimation(mContext, R.anim.unlock_anim);
+		unlockAnim.setAnimationListener(new Animation.AnimationListener() {
+			
+			public void onAnimationStart(Animation animation) {
+			}
+			
+			public void onAnimationRepeat(Animation animation) {			
+			}
+			
+			public void onAnimationEnd(Animation animation) {
+				mUnlockAnimationView.setVisibility(INVISIBLE);			
+			}
+		});
+		
+		mUnlockAnimationView.startAnimation(unlockAnim);
 	}
 
 	public void resetScore() {

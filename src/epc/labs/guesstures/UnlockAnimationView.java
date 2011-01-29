@@ -22,7 +22,13 @@ public class UnlockAnimationView extends View {
 	
 	public void setSprite(String name) {
 		Log.i(TAG, "UnlockAnim: setSprite()");
+		name = name.replace(" ", "_");
+		name = name.replace("-", "_");			
 		int id = mContext.getResources().getIdentifier(name, "drawable", "epc.labs.guesstures");
+  	if(id == 0) {
+  		Log.e(TAG, "Missing Gallery Image: " + name);
+  		id = mContext.getResources().getIdentifier("no_photo", "drawable", "epc.labs.guesstures");
+  	} 		
 		mSprite = mContext.getResources().getDrawable(id);
 		Rect bounds = new Rect();
 		bounds.set(	getWidth()/2 - (SPRITE_WIDTH/2),

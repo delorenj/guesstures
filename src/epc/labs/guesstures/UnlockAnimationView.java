@@ -22,10 +22,13 @@ public class UnlockAnimationView extends View {
 	private static final int SPRITE_WIDTH = 85;
 	private Context mContext;
 	private Drawable mSprite;
+	private SoundManager mSoundManager;
 	
 	public UnlockAnimationView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
+		mSoundManager = new SoundManager(mContext);
+		mSoundManager.addSound(1, R.raw.yay);
 	}
 	
 	public void setSprite(String name) {
@@ -96,6 +99,7 @@ public class UnlockAnimationView extends View {
 		animSet.setAnimationListener(new Animation.AnimationListener() {
 			
 			public void onAnimationStart(Animation animation) {
+				mSoundManager.playSound(1);
 			}
 			
 			public void onAnimationRepeat(Animation animation) {			

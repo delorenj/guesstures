@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
 
 public class UIOverlay extends ViewGroup {
 	public static final String TAG = "Guesstures";
@@ -40,23 +42,7 @@ public class UIOverlay extends ViewGroup {
 		if(mDatabase.updateScore(name)) {							// Update score in database
 			mScoreView.drawScore(mDatabase.queryScore());// Draw new score
 		}
-	
-		mUnlockAnimationView.setSprite(name);
-		Animation unlockAnim = AnimationUtils.loadAnimation(mContext, R.anim.unlock_anim);
-		unlockAnim.setAnimationListener(new Animation.AnimationListener() {
-			
-			public void onAnimationStart(Animation animation) {
-			}
-			
-			public void onAnimationRepeat(Animation animation) {			
-			}
-			
-			public void onAnimationEnd(Animation animation) {
-				mUnlockAnimationView.setVisibility(INVISIBLE);			
-			}
-		});
-		
-		mUnlockAnimationView.startAnimation(unlockAnim);
+		mUnlockAnimationView.setAnimation(name);
 	}
 
 	public void resetScore() {

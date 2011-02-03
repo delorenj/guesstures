@@ -7,6 +7,14 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 
 public class UnlockAnimationView extends View {
 	private static String TAG = "Guesstures";
@@ -64,5 +72,44 @@ public class UnlockAnimationView extends View {
 	public void initAnimation() {
 		Log.i(TAG, "UnlockAnim: initAnim()");
 		invalidate();
+	}
+
+	public void setAnimation(String name) {
+		
+		setSprite(name);
+		AnimationSet animSet = new AnimationSet(false);
+		Animation stage1_scale = new ScaleAnimation(0.0f, 1.0f, 
+																				0.0f, 1.0f, 
+																				Animation.RELATIVE_TO_SELF, 0.5f, 
+																				Animation.RELATIVE_TO_SELF, 0.5f);
+		stage1_scale.setDuration(1000);
+		stage1_scale.setInterpolator(AnimationUtils.loadInterpolator(mContext, android.R.anim.bounce_interpolator));
+		animSet.addAnimation(stage1_scale);
+		
+		float toYDelta = getHeight() - mSprite.getBounds().top;
+		Animation stage2_translate = new TranslateAnimation(0, 0, 0, toYDelta);
+		stage2_translate.setDuration(1500);
+		stage2_translate.setInterpolator(AnimationUtils.loadInterpolator(mContext, android.R.anim.anticipate_interpolator));
+		stage2_translate.setStartOffset(2500);
+		animSet.addAnimation(stage2_translate);
+
+		animSet.setAnimationListener(new Animation.AnimationListener() {
+			
+			public void onAnimationStart(Animation animation) {
+			}
+			
+			public void onAnimationRepeat(Animation animation) {			
+			}
+			
+			public void onAnimationEnd(Animation animation) {
+				setVisibility(INVISIBLE);			
+			}
+		});
+		setAnimation(animSet);
+		
+//		LayoutAnimationController ctrl = new LayoutAnimationController(animSet);
+//		((UIOverlay)getParent()).setLayoutAnimation(animSet);
+		
+		
 	}
 }

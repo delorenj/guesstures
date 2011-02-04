@@ -28,7 +28,7 @@ public class UnlockAnimationView extends View {
 		super(context, attrs);
 		mContext = context;
 		mSoundManager = new SoundManager(mContext);
-		mSoundManager.addSound(1, R.raw.yay);
+		mSoundManager.addSound(SoundManager.UNLOCK, R.raw.yay);
 	}
 	
 	public void setSprite(String name) {
@@ -91,7 +91,7 @@ public class UnlockAnimationView extends View {
 		
 		float toYDelta = getHeight() - mSprite.getBounds().top;
 		Animation stage2_translate = new TranslateAnimation(0, 0, 0, toYDelta);
-		stage2_translate.setDuration(1500);
+		stage2_translate.setDuration(1200);
 		stage2_translate.setInterpolator(AnimationUtils.loadInterpolator(mContext, android.R.anim.anticipate_interpolator));
 		stage2_translate.setStartOffset(2500);
 		animSet.addAnimation(stage2_translate);
@@ -99,7 +99,7 @@ public class UnlockAnimationView extends View {
 		animSet.setAnimationListener(new Animation.AnimationListener() {
 			
 			public void onAnimationStart(Animation animation) {
-				mSoundManager.playSound(1);
+				mSoundManager.playSound(SoundManager.UNLOCK);
 			}
 			
 			public void onAnimationRepeat(Animation animation) {			

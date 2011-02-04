@@ -40,6 +40,7 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
     GestureOverlayView overlay = (GestureOverlayView) findViewById(R.id.gestureOverlay);
     overlay.addOnGesturePerformedListener(this);
     overlay.addOnGestureListener(this);
+    overlay.setGestureColor(Color.WHITE);
     Intent about = new Intent(this, About.class);
     if((savedInstanceState == null) && (mDatabase.queryScore() < 3)) {
   		startActivity(about);	

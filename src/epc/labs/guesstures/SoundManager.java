@@ -13,6 +13,8 @@ public class SoundManager {
 	private  AudioManager  mAudioManager;
 	private  Context mContext;
 	
+	public final static int UNLOCK = 1; 
+	
 	public SoundManager(Context context) {
 		mContext = context;
 	  mSoundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);

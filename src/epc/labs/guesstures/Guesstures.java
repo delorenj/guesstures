@@ -15,17 +15,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.ImageView;
 
 public class Guesstures extends Activity implements OnGestureListener, OnGesturePerformedListener {
 	private static final String TAG = "Guesstures";
 	private DatabaseHelper mDatabase;
+	private SoundEffects se;
 	GestureLibrary[] mLibraries;
 	
 	@Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);    
     setContentView(R.layout.main);
+    se = SoundEffects.getInstance(this);
     mLibraries = new GestureLibrary[2];
     mLibraries[0] = GestureLibraries.fromRawResource(this, R.raw.gestures1);
     mLibraries[1] = GestureLibraries.fromRawResource(this, R.raw.gestures2);
@@ -107,20 +108,22 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 	}
 
 	public void onGesture(GestureOverlayView overlay, MotionEvent event) {
+		Log.i(TAG, "onGesture");
 	}
 
 	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureCancelled");
-		
+//		se.stopChalkDraw();
 	}
 
 	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureEnded");
-		
+//		se.stopChalkDraw();		
 	}
 
 	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureStarted");
-		
+		se.chalkStart();
+//		se.startChalkDraw();
 	}
 }

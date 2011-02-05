@@ -10,25 +10,21 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
-import android.view.animation.LayoutAnimationController;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
 
 public class UnlockAnimationView extends View {
 	private static String TAG = "Guesstures";
-	private static final int SPRITE_HEIGHT = 85;
-	private static final int SPRITE_WIDTH = 85;
+	private static final int SPRITE_HEIGHT = 180;
+	private static final int SPRITE_WIDTH = 180;
 	private Context mContext;
 	private Drawable mSprite;
-	private SoundManager mSoundManager;
+	private SoundEffects se;
 	
 	public UnlockAnimationView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
-		mSoundManager = new SoundManager(mContext);
-		mSoundManager.addSound(SoundManager.UNLOCK, R.raw.yay);
+		se = SoundEffects.getInstance(mContext);
 	}
 	
 	public void setSprite(String name) {
@@ -99,7 +95,7 @@ public class UnlockAnimationView extends View {
 		animSet.setAnimationListener(new Animation.AnimationListener() {
 			
 			public void onAnimationStart(Animation animation) {
-				mSoundManager.playSound(SoundManager.UNLOCK);
+				se.yay();
 			}
 			
 			public void onAnimationRepeat(Animation animation) {			

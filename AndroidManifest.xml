@@ -19,4 +19,5 @@
 	<activity android:launchMode="standard" android:name="Gallery" android:noHistory="true" android:description="@string/gallery_description" android:label="@string/gallery"></activity>
 </application>
     <uses-sdk android:minSdkVersion="8" />
+<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 </manifest> 

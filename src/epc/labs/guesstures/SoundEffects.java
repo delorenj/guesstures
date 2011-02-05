@@ -8,7 +8,6 @@ public class SoundEffects extends SoundManager {
 	private static SoundEffects INSTANCE;
 	private int mDrawId;
 	public static SoundEffects getInstance(Context ctx) {
-		//return new SoundEffects(ctx);
 		if(INSTANCE==null || INSTANCE.released)INSTANCE=new SoundEffects(ctx);
 		return INSTANCE;
 	}
@@ -17,7 +16,7 @@ public class SoundEffects extends SoundManager {
 		super(3, context);
 
 		addSound(R.raw.yay);
-//		addLoopSound(R.raw.chalk_extended_short);
+		addSound(R.raw.chalk_extended_short);
 		addSound(R.raw.chalk_start);
 	}
 
@@ -27,12 +26,12 @@ public class SoundEffects extends SoundManager {
 
 	public void startChalkDraw() {
 		Log.i(TAG, "Starting Chalk Drawing Motion Noise");
-//		mDrawId = playLoop(R.raw.chalk_extended_short);
+    mDrawId = playLoop(R.raw.chalk_extended_short);
 	}
 
 	public void stopChalkDraw() {
 		Log.i(TAG, "Stopping Chalk Draw Noise");
-//		stop(R.raw.chalk_extended_short, mDrawId);
+		stop(mDrawId);
 	}
 	
 	public void yay() {

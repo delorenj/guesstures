@@ -2,6 +2,7 @@ package epc.labs.guesstures;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +46,12 @@ public class UIOverlay extends ViewGroup {
 		mUnlockAnimationView.setAnimation(name);
 	}
 
+	public void noMatch() {
+		Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+		long[] pattern = {0,200,200,200};
+		v.vibrate(pattern, -1);		
+	}
+	
 	public void resetScore() {
 		mDatabase.resetScore();
 		mScoreView.drawScore(0);

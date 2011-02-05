@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.GridView;
 
 public class Gallery extends Activity {
-	private static String TAG = "Guesstures";
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);

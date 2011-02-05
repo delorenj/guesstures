@@ -42,6 +42,7 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
     overlay.addOnGesturePerformedListener(this);
     overlay.addOnGestureListener(this);
     overlay.setGestureColor(Color.WHITE);
+    overlay.setGestureStrokeWidth(12);
     Intent about = new Intent(this, About.class);
     if((savedInstanceState == null) && (mDatabase.queryScore() < 3)) {
   		startActivity(about);	
@@ -60,17 +61,6 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 		}
 	}
 
-//	private void onMatchFound(GestureOverlayView overlay, Gesture l, Gesture r, String name) {
-//		Log.i(TAG, "Match Found!: "+ name);
-//		UIOverlay ui = (UIOverlay) findViewById(R.id.uiOverlay);
-//		ui.updateScore(name);
-//		ImageView iv = (ImageView) findViewById(R.id.lpic);
-//		iv.setImageBitmap(l.toBitmap(48, 48, 1, Color.WHITE));
-//		iv = (ImageView) findViewById(R.id.rpic);
-//		iv.setImageBitmap(r.toBitmap(48, 48, 1, Color.WHITE));			
-//		
-//	}
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
@@ -113,17 +103,17 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 
 	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureCancelled");
-//		se.stopChalkDraw();
+		se.stopChalkDraw();
 	}
 
 	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureEnded");
-//		se.stopChalkDraw();		
+		se.stopChalkDraw();		
 	}
 
 	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
 		Log.i(TAG, "onGestureStarted");
 		se.chalkStart();
-//		se.startChalkDraw();
+		se.startChalkDraw();
 	}
 }

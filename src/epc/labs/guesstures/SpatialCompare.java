@@ -105,17 +105,13 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 		
 	@Override
 	protected void onPostExecute(String match) {
+		UIOverlay ui = (UIOverlay) activity.findViewById(R.id.uiOverlay);		
 		if(match != null) {
 			libMatch = mLibrary.getGestures(match);
-			TextView tv = (TextView) activity.findViewById(R.id.result);
-			tv.setText(match);		
-			UIOverlay ui = (UIOverlay) activity.findViewById(R.id.uiOverlay);
 			ui.updateScore(match);			
 		} else {
-			TextView tv = (TextView) activity.findViewById(R.id.result);
-			tv.setText("No Match");
-		}
-		
+			ui.noMatch();
+		}		
 	}
 	
 	public void setLibrary(GestureLibrary lib) {

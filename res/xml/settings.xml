@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+<CheckBoxPreference android:summary="@string/chalk_sound_desc" android:defaultValue="true" android:title="@string/chalk_sound" android:key="chalk" android:disableDependentsState="false"></CheckBoxPreference>
+<CheckBoxPreference android:summary="@string/continuous_chalk_sound_desc" android:defaultValue="false" android:title="@string/continuous_chalk_sound" android:key="continuous_chalk" android:dependency="chalk"></CheckBoxPreference>
+</PreferenceScreen>

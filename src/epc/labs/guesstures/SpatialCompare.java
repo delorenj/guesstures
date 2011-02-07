@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import android.app.Activity;
-import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureUtils;
@@ -18,7 +17,6 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 	protected ArrayList<Gesture> libMatch = null;
 	protected Activity activity;
 
-	@Override
 	public double similarity(Gesture l, Gesture r, int size) {
 		Log.i(TAG, "Comparing by bitmap");
 		final int bmpHeight = size, bmpWidth = size;
@@ -66,7 +64,6 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 		return score;
 	}
 
-	@Override
 	public double similarity(Gesture l, Gesture r) {
 		return similarity(l,r,32);
 	}
@@ -81,7 +78,7 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 	}
 
 	private String recognize(Gesture subject) {
-		String strBestMatch = "No Match";
+		String strBestMatch = null;
 		double scoreBestMatch = 0;
 		Set<String> gestures = mLibrary.getGestureEntries();
 		Log.i(TAG, "Recognizing: " + gestures.size() + " drawings in the library");
@@ -108,9 +105,13 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 		
 	@Override
 	protected void onPostExecute(String match) {
-		libMatch = mLibrary.getGestures(match);
-		TextView tv = (TextView) activity.findViewById(R.id.result);
-		tv.setText(match);		
+		UIOverlay ui = (UIOverlay) activity.findViewById(R.id.uiOverlay);		
+		if(match != null) {
+			libMatch = mLibrary.getGestures(match);
+			ui.updateScore(match);			
+		} else {
+			ui.noMatch();
+		}		
 	}
 	
 	public void setLibrary(GestureLibrary lib) {

@@ -30,7 +30,7 @@ public class ScoreView extends View {
 
 	@Override
 	protected void onDraw(Canvas c) {
-//		Log.d(TAG, "onDraw(): ScoreView");
+		//Log.d(TAG, "onDraw(): ScoreView");
 		if(mdrawScore.length == 0)
 			return;
 		int prevLeft = getWidth();

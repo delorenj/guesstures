@@ -1,7 +1,6 @@
 package epc.labs.guesstures;
 
 import android.gesture.Gesture;
-import android.gesture.GestureLibrary;
 
 public interface ImageCompare {
 

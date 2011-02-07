@@ -48,7 +48,7 @@ public class UIOverlay extends ViewGroup {
 
 	public void noMatch() {
 		Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-		long[] pattern = {0,200,200,200};
+		long[] pattern = {0,75,75,75};
 		v.vibrate(pattern, -1);		
 	}
 	

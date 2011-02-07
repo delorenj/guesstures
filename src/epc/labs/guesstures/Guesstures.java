@@ -74,8 +74,8 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 		case R.id.new_game:
 			newGame();
 			return true;
-		case R.id.tutorial:
-			tutorial();
+		case R.id.settings:
+			startActivity(new Intent(this, Prefs.class));
 			return true;
 		case R.id.gallery:
 	    Intent gallery = new Intent(this, Gallery.class);
@@ -87,33 +87,36 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 		
 	}
 
-	private void tutorial() {
-		Log.e(TAG, "Tutorial not implemented yet");
-		
-	}
-
 	private void newGame() {
 		UIOverlay ui = (UIOverlay) findViewById(R.id.uiOverlay);
 		ui.resetScore();
 	}
 
 	public void onGesture(GestureOverlayView overlay, MotionEvent event) {
-		Log.i(TAG, "onGesture");
+//		Log.i(TAG, "onGesture");
 	}
 
 	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
-		Log.i(TAG, "onGestureCancelled");
-		se.stopChalkDraw();
+//		Log.i(TAG, "onGestureCancelled");
+		if(Prefs.continuousChalkSoundOn(this)) {		
+			se.stopChalkDraw();		
+		}
 	}
 
 	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
-		Log.i(TAG, "onGestureEnded");
-		se.stopChalkDraw();		
+//		Log.i(TAG, "onGestureEnded");
+		if(Prefs.continuousChalkSoundOn(this)) {		
+			se.stopChalkDraw();		
+		}
 	}
 
 	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
-		Log.i(TAG, "onGestureStarted");
-		se.chalkStart();
-		se.startChalkDraw();
+//		Log.i(TAG, "onGestureStarted");
+		if(Prefs.chalkSoundOn(this)) {
+			se.chalkStart();
+			if(Prefs.continuousChalkSoundOn(this)) {
+				se.startChalkDraw();	
+			}						
+		}
 	}
 }

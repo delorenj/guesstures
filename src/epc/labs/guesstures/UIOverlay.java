@@ -13,6 +13,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.ScaleAnimation;
+import android.widget.TextView;
 
 public class UIOverlay extends ViewGroup {
 	public static final String TAG = "Guesstures";
@@ -42,8 +43,13 @@ public class UIOverlay extends ViewGroup {
 	public void updateScore(String name) {
 		if(mDatabase.updateScore(name)) {							// Update score in database
 			mScoreView.drawScore(mDatabase.queryScore());// Draw new score
+			if(!Guesstures.DEBUG) {
+				mUnlockAnimationView.setAnimation(name);
+			}
 		}
-		mUnlockAnimationView.setAnimation(name);
+		if(Guesstures.DEBUG){
+			mUnlockAnimationView.setAnimation(name);
+		}
 	}
 
 	public void noMatch() {

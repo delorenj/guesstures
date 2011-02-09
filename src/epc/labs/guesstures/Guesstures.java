@@ -18,24 +18,21 @@ import android.view.MotionEvent;
 
 public class Guesstures extends Activity implements OnGestureListener, OnGesturePerformedListener {
 	private static final String TAG = "Guesstures";
+	public static final boolean DEBUG = true;
 	private DatabaseHelper mDatabase;
 	private SoundEffects se;
-	GestureLibrary[] mLibraries;
+	GestureLibrary mLibrary;
 	
 	@Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);    
     setContentView(R.layout.main);
     se = SoundEffects.getInstance(this);
-    mLibraries = new GestureLibrary[2];
-    mLibraries[0] = GestureLibraries.fromRawResource(this, R.raw.gestures1);
-    mLibraries[1] = GestureLibraries.fromRawResource(this, R.raw.gestures2);
+    mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
     
-    for(GestureLibrary lib : mLibraries) {
-      if(!lib.load()) {
+    if(!mLibrary.load()) {
       	finish();
-      }    	
-    }
+    }    	
     
     mDatabase = new DatabaseHelper(this);
     GestureOverlayView overlay = (GestureOverlayView) findViewById(R.id.gestureOverlay);
@@ -51,14 +48,10 @@ public class Guesstures extends Activity implements OnGestureListener, OnGesture
 
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		Log.i(TAG, "onGesturePerformed");
-		int numStrokes = gesture.getStrokesCount();
-
-		if(numStrokes <= mLibraries.length) {
-				SpatialCompare sc = new SpatialCompare();
-				sc.setLibrary(mLibraries[numStrokes-1]);
-				sc.setActivity(this);
-				sc.execute(gesture);
-		}
+		SpatialCompare sc = new SpatialCompare();
+		sc.setLibrary(mLibrary);
+		sc.setActivity(this);
+		sc.execute(gesture);
 	}
 
 	@Override

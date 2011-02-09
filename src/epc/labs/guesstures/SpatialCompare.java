@@ -80,12 +80,16 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 	private String recognize(Gesture subject) {
 		String strBestMatch = null;
 		double scoreBestMatch = 0;
+		int numStrokes = subject.getStrokesCount();
 		Set<String> gestures = mLibrary.getGestureEntries();
 		Log.i(TAG, "Recognizing: " + gestures.size() + " drawings in the library");
 		for(String gName : gestures) {
 			Log.i(TAG, "++++++++++++++++++++ Checking Against Drawing: " + gName + "+++++++++++++++++++++++++++++");
 			ArrayList<Gesture> gList = mLibrary.getGestures(gName);
 			for(Gesture g : gList) {
+				if((g.getStrokesCount() != numStrokes) && (numStrokes <= 3)) {
+					continue;
+				}
 				Log.i(TAG, "\tGESTURE: " + gName + " ------------------");
 				double score = similarity(g, subject, 48);
 				if((score > 0.085) && (score > scoreBestMatch)) {

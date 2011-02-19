@@ -87,7 +87,7 @@ public class SpatialCompare extends AsyncTask<Gesture, Integer, String> implemen
 			Log.i(TAG, "++++++++++++++++++++ Checking Against Drawing: " + gName + "+++++++++++++++++++++++++++++");
 			ArrayList<Gesture> gList = mLibrary.getGestures(gName);
 			for(Gesture g : gList) {
-				if((g.getStrokesCount() != numStrokes) && (numStrokes <= 3)) {
+				if((g.getStrokesCount() != numStrokes)) {
 					continue;
 				}
 				Log.i(TAG, "\tGESTURE: " + gName + " ------------------");
